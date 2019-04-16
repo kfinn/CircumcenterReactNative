@@ -4,7 +4,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "tslint": "tslint --project ."
   },
   "dependencies": {
     "expo": "^32.0.0",
@@ -14,6 +15,7 @@
   "devDependencies": {
     "@types/expo": "^32.0.10",
     "@types/react": "^16.8.13",
+    "@types/react-native": "^0.57.43",
     "tslint": "^5.15.0",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.4.3"
