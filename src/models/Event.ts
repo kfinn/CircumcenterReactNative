@@ -1,6 +1,8 @@
 import { decorate, observable, action } from 'mobx';
 import moment from 'moment';
 import Venue, { VenueParams } from './Venue';
+import { Channel } from 'actioncable';
+import eventVenueRecommendationsChannel from '../channels/EventVenueRecommendationsChannel';
 
 export interface EventParams {
   id: string;
@@ -11,7 +13,8 @@ export interface EventParams {
 export default class Event {
   id: string;
   start: moment.Moment;
-  venues: Venue[]
+  venues: Venue[];
+  channel?: Channel;
 
   constructor(params: EventParams) {
     this.id = params.id;
@@ -33,6 +36,17 @@ export default class Event {
 
     let currentVenueIds = updatedData.venues.map(venue => venue.id);
     this.venues = this.venues.filter(venue => currentVenueIds.some(currentId => venue.id == currentId));
+  }
+
+  subscribe() {
+    this.channel = eventVenueRecommendationsChannel(this)
+  }
+
+  unsubscribe() {
+    if (this.channel) {
+      this.channel.unsubscribe()
+    }
+    this.channel = undefined
   }
 };
 

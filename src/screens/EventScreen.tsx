@@ -14,12 +14,21 @@ class EventScreen extends React.Component<NavigationScreenProps<EventScreenNavig
     return this.props.navigation.getParam('event')
   }
 
+  componentDidMount() {
+    this.event.subscribe()
+  }
+
+  componentWillUnmount() {
+    this.event.unsubscribe()
+  }
+
   onPress = () => {
     fetch(
       `http://localhost:3000/api/events/${this.event.id}/event_venue_recommendations`,
       {
         body: JSON.stringify({
-          recommendation: {
+          event_venue_recommendation: {
+            recommendation_attributes: {},
             venue_attributes: {
               name: "blah blah blah"
             }
@@ -31,11 +40,6 @@ class EventScreen extends React.Component<NavigationScreenProps<EventScreenNavig
         method: 'POST',
       },
     )
-      .then(() => fetch(`http://localhost:3000/api/events/${this.event.id}`))
-      .then(response => response.json())
-      .then((responseJson) => {
-        this.event.merge(responseJson)
-      })
   }
 
   public render() {
