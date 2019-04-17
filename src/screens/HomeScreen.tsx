@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Button, View } from 'react-native';
-import STYLES from '../Styles';
 import { NavigationScreenConfigProps } from 'react-navigation';
-import { EVENT_SCREEN_ROUTE } from './EventScreen';
 import Event from '../models/Event';
+import Styles from '../Styles';
+import { EVENT_SCREEN_ROUTE } from './EventScreen';
 
 const HOME_SCREEN_ROUTE = 'home';
 
@@ -26,17 +26,17 @@ export default class HomeScreen extends React.Component<NavigationScreenConfigPr
       .then(response => response.json())
       .then(json => new Event(json))
       .then((event) => {
-        this.props.navigation.push(EVENT_SCREEN_ROUTE, { event: event })
-      })
+        this.props.navigation.push(EVENT_SCREEN_ROUTE, { event });
+      });
   }
 
   public render() {
     return (
-      <View style={STYLES.container}>
+      <View style={Styles.container}>
         <Button title="New Event" onPress={this.onPress} />
       </View>
     );
   }
 }
 
-export { HOME_SCREEN_ROUTE }
+export { HOME_SCREEN_ROUTE };

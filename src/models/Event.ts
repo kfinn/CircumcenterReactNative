@@ -1,56 +1,56 @@
-import { decorate, observable, action } from 'mobx';
-import moment from 'moment';
-import Venue, { VenueParams } from './Venue';
 import { Channel } from 'actioncable';
-import eventVenueRecommendationsChannel from '../channels/EventVenueRecommendationsChannel';
+import { action, decorate, observable } from 'mobx';
+import moment from 'moment';
+import EventVenueRecommendationsChannel from '../channels/EventVenueRecommendationsChannel';
+import Venue, { VenueParams } from './Venue';
 
-export interface EventParams {
+export interface IEventParams {
   id: string;
   start: string;
-  venues: VenueParams[]
+  venues: VenueParams[];
 }
 
 export default class Event {
-  id: string;
-  start: moment.Moment;
-  venues: Venue[];
-  channel?: Channel;
+  public id: string;
+  public start: moment.Moment;
+  public venues: Venue[];
+  public channel?: Channel;
 
-  constructor(params: EventParams) {
+  constructor(params: IEventParams) {
     this.id = params.id;
     this.start = moment(params.start);
-    this.venues = params.venues.map(venueParams => new Venue(venueParams))
+    this.venues = params.venues.map(venueParams => new Venue(venueParams));
   }
 
-  merge(updatedData: EventParams) {
+  public merge(updatedData: IEventParams) {
     this.start = moment(updatedData.start);
 
     updatedData.venues.forEach((venueParams) => {
-      let venue = this.venues.find(venue => venue.id == venueParams.id)
+      const venue = this.venues.find(v => v.id === venueParams.id);
       if (venue) {
-        venue.merge(venueParams)
+        venue.merge(venueParams);
       } else {
-        this.venues.push(new Venue(venueParams))
+        this.venues.push(new Venue(venueParams));
       }
     });
 
-    let currentVenueIds = updatedData.venues.map(venue => venue.id);
-    this.venues = this.venues.filter(venue => currentVenueIds.some(currentId => venue.id == currentId));
+    const currentVenueIds = updatedData.venues.map(v => v.id);
+    this.venues = this.venues.filter(v => currentVenueIds.some(currentId => v.id === currentId));
   }
 
-  subscribe() {
-    this.channel = eventVenueRecommendationsChannel(this)
+  public subscribe() {
+    this.channel = EventVenueRecommendationsChannel(this);
   }
 
-  unsubscribe() {
+  public unsubscribe() {
     if (this.channel) {
-      this.channel.unsubscribe()
+      this.channel.unsubscribe();
     }
-    this.channel = undefined
+    this.channel = undefined;
   }
-};
+}
 
 decorate(Event, {
+  merge: action,
   start: observable,
-  merge: action
 });

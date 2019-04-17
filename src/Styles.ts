@@ -9,4 +9,4 @@ const STYLES = StyleSheet.create({
   },
 });
 
-export default STYLES
+export default STYLES;

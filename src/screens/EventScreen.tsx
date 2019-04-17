@@ -1,28 +1,28 @@
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View, Text, Button } from 'react-native';
-import STYLES from '../Styles';
+import { Button, Text, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import Event from '../models/Event';
-import { observer } from 'mobx-react';
+import Styles from '../Styles';
 
 const EVENT_SCREEN_ROUTE = 'event';
 
-export interface EventScreenNavigationParams { event: Event }
+export interface IEventScreenNavigationParams { event: Event; }
 
-class EventScreen extends React.Component<NavigationScreenProps<EventScreenNavigationParams>, {}> {
+class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavigationParams>, {}> {
   get event() {
-    return this.props.navigation.getParam('event')
+    return this.props.navigation.getParam('event');
   }
 
-  componentDidMount() {
-    this.event.subscribe()
+  public componentDidMount() {
+    this.event.subscribe();
   }
 
-  componentWillUnmount() {
-    this.event.unsubscribe()
+  public componentWillUnmount() {
+    this.event.unsubscribe();
   }
 
-  onPress = () => {
+  public onPress = () => {
     fetch(
       `http://localhost:3000/api/events/${this.event.id}/event_venue_recommendations`,
       {
@@ -30,26 +30,28 @@ class EventScreen extends React.Component<NavigationScreenProps<EventScreenNavig
           event_venue_recommendation: {
             recommendation_attributes: {},
             venue_attributes: {
-              name: "blah blah blah"
-            }
-          }
+              name: 'blah blah blah',
+            },
+          },
         }),
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'POST',
       },
-    )
+    );
   }
 
   public render() {
     return (
-      <View style={STYLES.container}>
+      <View style={Styles.container}>
         <Text>{this.event.id}</Text>
         <Text>{this.event.start.format()}</Text>
         <Text>{this.event.start.fromNow()}</Text>
         {
-          this.event.venues.map(venue => <Text key={venue.id}>{venue.name} - {venue.recommendations}</Text>)
+          this.event.venues.map((venue) => {
+            return <Text key={venue.id}>{venue.name} - {venue.recommendations}</Text>;
+          })
         }
         <Button title="Recommend a Venue" onPress={this.onPress} />
       </View>
@@ -59,4 +61,4 @@ class EventScreen extends React.Component<NavigationScreenProps<EventScreenNavig
 
 export default observer(EventScreen);
 
-export { EVENT_SCREEN_ROUTE }
+export { EVENT_SCREEN_ROUTE };

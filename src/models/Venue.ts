@@ -1,30 +1,30 @@
-import { decorate, observable, action } from 'mobx';
+import { action, decorate, observable } from 'mobx';
 
-export interface VenueParams {
+export interface IVenueParams {
   id: string;
   name: string;
   recommendations: number;
 }
 
 export default class Venue {
-  id: string;
-  name: string;
-  recommendations: number;
+  public id: string;
+  public name: string;
+  public recommendations: number;
 
-  constructor(params: VenueParams) {
-    this.id = params.id
-    this.name = params.name
-    this.recommendations = params.recommendations
+  constructor(params: IVenueParams) {
+    this.id = params.id;
+    this.name = params.name;
+    this.recommendations = params.recommendations;
   }
 
-  merge(updatedData: VenueParams) {
-    this.name = updatedData.name
-    this.recommendations = updatedData.recommendations
+  public merge(updatedData: IVenueParams) {
+    this.name = updatedData.name;
+    this.recommendations = updatedData.recommendations;
   }
 }
 
 decorate(Venue, {
+  merge: action,
   name: observable,
   recommendations: observable,
-  merge: action
-})
+});
