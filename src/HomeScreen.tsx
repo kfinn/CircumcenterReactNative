@@ -1,24 +1,24 @@
 import * as React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
-export default class App extends React.Component {
-  onPress = () => {
+export default class HomeScreen extends React.Component {
+  public onPress = () => {
     fetch(
-      "http://localhost:3000/api/events",
+      'http://localhost:3000/api/events',
       {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
         body: JSON.stringify({
           event: {
-            start: "2019-05-01 12:00:00"
-          }
-        })
-      }
+            start: '2019-05-01 12:00:00',
+          },
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      },
     )
-    .then(response => response.json())
-    .then(console.log)
+      .then(response => response.json())
+      .then(console.log);
   }
 
   public render() {
