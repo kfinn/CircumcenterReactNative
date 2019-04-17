@@ -1,6 +1,6 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation';
-import HomeScreen, { HOME_SCREEN_ROUTE } from './HomeScreen';
-import EventScreen, { EVENT_SCREEN_ROUTE }  from './EventScreen';
+import HomeScreen, { HOME_SCREEN_ROUTE } from '../screens/HomeScreen';
+import EventScreen, { EVENT_SCREEN_ROUTE }  from '../screens/EventScreen';
 
 const appNavigator = createStackNavigator(
   {

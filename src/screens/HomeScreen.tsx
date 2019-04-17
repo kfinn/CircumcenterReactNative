@@ -3,6 +3,7 @@ import { Button, View } from 'react-native';
 import STYLES from '../Styles';
 import { NavigationScreenConfigProps } from 'react-navigation';
 import { EVENT_SCREEN_ROUTE } from './EventScreen';
+import Event from '../models/Event';
 
 const HOME_SCREEN_ROUTE = 'home';
 
@@ -13,7 +14,7 @@ export default class HomeScreen extends React.Component<NavigationScreenConfigPr
       {
         body: JSON.stringify({
           event: {
-            start: '2019-05-01 12:00:00',
+            start: '2019-05-01 12:00:00-04:00',
           },
         }),
         headers: {
@@ -23,6 +24,7 @@ export default class HomeScreen extends React.Component<NavigationScreenConfigPr
       },
     )
       .then(response => response.json())
+      .then(json => new Event(json))
       .then((event) => {
         this.props.navigation.push(EVENT_SCREEN_ROUTE, { event: event })
       })
