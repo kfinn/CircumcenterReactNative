@@ -2,12 +2,12 @@ import { Channel } from 'actioncable';
 import { action, decorate, observable } from 'mobx';
 import moment from 'moment';
 import EventVenueRecommendationsChannel from '../channels/EventVenueRecommendationsChannel';
-import Venue, { VenueParams } from './Venue';
+import Venue, { IVenueParams } from './Venue';
 
 export interface IEventParams {
   id: string;
   start: string;
-  venues: VenueParams[];
+  venues: IVenueParams[];
 }
 
 export default class Event {
@@ -19,7 +19,10 @@ export default class Event {
   constructor(params: IEventParams) {
     this.id = params.id;
     this.start = moment(params.start);
-    this.venues = params.venues.map(venueParams => new Venue(venueParams));
+    this.venues = params.venues.map((venueParams) => {
+      console.log(venueParams)
+      return new Venue({ event: this, ...venueParams })
+    });
   }
 
   public merge(updatedData: IEventParams) {
@@ -30,7 +33,7 @@ export default class Event {
       if (venue) {
         venue.merge(venueParams);
       } else {
-        this.venues.push(new Venue(venueParams));
+        this.venues.push(new Venue({ event: this, ...venueParams }));
       }
     });
 

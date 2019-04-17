@@ -4,6 +4,7 @@ import { Button, Text, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import Event from '../models/Event';
 import Styles from '../Styles';
+import VenueRow from '../components/VenueRow';
 
 const EVENT_SCREEN_ROUTE = 'event';
 
@@ -50,7 +51,7 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
         <Text>{this.event.start.fromNow()}</Text>
         {
           this.event.venues.map((venue) => {
-            return <Text key={venue.id}>{venue.name} - {venue.recommendations}</Text>;
+            return <VenueRow key={venue.id} venue={venue} />;
           })
         }
         <Button title="Recommend a Venue" onPress={this.onPress} />
