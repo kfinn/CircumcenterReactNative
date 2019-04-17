@@ -1,3 +1,3 @@
-import AppContainer from './src/AppContainer';
+import AppContainer from './src/components/AppContainer';
 
 export default AppContainer;
