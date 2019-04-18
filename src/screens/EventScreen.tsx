@@ -4,7 +4,7 @@ import { Button, Text, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import Event from '../models/Event';
 import Styles from '../Styles';
-import VenueRow from '../components/VenueRow';
+import VenueSuggestionRow from '../components/VenueSuggestionRow';
 
 const EVENT_SCREEN_ROUTE = 'event';
 
@@ -25,14 +25,11 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
 
   public onPress = () => {
     fetch(
-      `http://localhost:3000/api/events/${this.event.id}/event_venue_recommendations`,
+      `http://localhost:3000/api/events/${this.event.id}/venue_suggestions`,
       {
         body: JSON.stringify({
-          event_venue_recommendation: {
-            recommendation_attributes: {},
-            venue_attributes: {
-              name: 'blah blah blah',
-            },
+          venue_suggestion: {
+            name: 'blah blah blah'
           },
         }),
         headers: {
@@ -50,8 +47,8 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
         <Text>{this.event.start.format()}</Text>
         <Text>{this.event.start.fromNow()}</Text>
         {
-          this.event.venues.map((venue) => {
-            return <VenueRow key={venue.id} venue={venue} />;
+          this.event.venueSuggestions.map((venueSuggestion) => {
+            return <VenueSuggestionRow key={venueSuggestion.id} venueSuggestion={venueSuggestion} />;
           })
         }
         <Button title="Recommend a Venue" onPress={this.onPress} />

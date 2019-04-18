@@ -2,43 +2,44 @@ import { Channel } from 'actioncable';
 import { action, decorate, observable } from 'mobx';
 import moment from 'moment';
 import EventVenueRecommendationsChannel from '../channels/EventVenueRecommendationsChannel';
-import Venue, { IVenueParams } from './Venue';
+import VenueSuggestion, { IVenueSuggestionParams } from './VenueSuggestion';
 
 export interface IEventParams {
   id: string;
   start: string;
-  venues: IVenueParams[];
+  venueSuggestions: IVenueSuggestionParams[];
 }
 
 export default class Event {
   public id: string;
   public start: moment.Moment;
-  public venues: Venue[];
+  public venueSuggestions: VenueSuggestion[];
   public channel?: Channel;
 
   constructor(params: IEventParams) {
     this.id = params.id;
     this.start = moment(params.start);
-    this.venues = params.venues.map((venueParams) => {
-      console.log(venueParams)
-      return new Venue({ event: this, ...venueParams })
+    this.venueSuggestions = params.venueSuggestions.map((venueSuggestionParams) => {
+      return new VenueSuggestion({ event: this, ...venueSuggestionParams })
     });
   }
 
   public merge(updatedData: IEventParams) {
     this.start = moment(updatedData.start);
 
-    updatedData.venues.forEach((venueParams) => {
-      const venue = this.venues.find(v => v.id === venueParams.id);
+    updatedData.venueSuggestions.forEach((venueSuggestionParams) => {
+      const venue = this.venueSuggestions.find(v => v.id === venueSuggestionParams.id);
       if (venue) {
-        venue.merge(venueParams);
+        venue.merge(venueSuggestionParams);
       } else {
-        this.venues.push(new Venue({ event: this, ...venueParams }));
+        this.venueSuggestions.push(new VenueSuggestion({ event: this, ...venueSuggestionParams }));
       }
     });
 
-    const currentVenueIds = updatedData.venues.map(v => v.id);
-    this.venues = this.venues.filter(v => currentVenueIds.some(currentId => v.id === currentId));
+    const currentVenueSuggestionIds = updatedData.venueSuggestions.map(v => v.id);
+    this.venueSuggestions = this.venueSuggestions.filter(
+      v => currentVenueSuggestionIds.some(currentId => v.id === currentId)
+    );
   }
 
   public subscribe() {

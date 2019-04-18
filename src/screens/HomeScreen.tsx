@@ -1,3 +1,4 @@
+import camelize from 'camelize';
 import * as React from 'react';
 import { Button, View } from 'react-native';
 import { NavigationScreenConfigProps } from 'react-navigation';
@@ -24,6 +25,7 @@ export default class HomeScreen extends React.Component<NavigationScreenConfigPr
       },
     )
       .then(response => response.json())
+      .then(camelize)
       .then(json => new Event(json))
       .then((event) => {
         this.props.navigation.push(EVENT_SCREEN_ROUTE, { event });
