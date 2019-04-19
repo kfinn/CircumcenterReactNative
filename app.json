@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.heptarex.Circumcenter",
+      "associatedDomains": [
+        "circumcenter.herokuapp.com"
+      ]
     },
     "description": "",
     "githubUrl": "https://github.com/kfinn/CircumcenterReactNative"
