@@ -11,7 +11,7 @@ export default class VenueSuggestionRow extends Component<IVenueProps, {}> {
 
   public endorsePressed = () => {
     fetch(
-      `http://localhost:3000/api/venue_suggestions/${this.venueSugestion.id}/endorsements`,
+      `https://circumcenter.herokuapp.com/api/venue_suggestions/${this.venueSugestion.id}/endorsements`,
       {
         method: 'POST',
       },
@@ -20,7 +20,7 @@ export default class VenueSuggestionRow extends Component<IVenueProps, {}> {
 
   public vetoPressed = () => {
     fetch(
-      `http://localhost:3000/api/venue_suggestions/${this.venueSugestion.id}/vetoes`,
+      `https://circumcenter.herokuapp.com/api/venue_suggestions/${this.venueSugestion.id}/vetoes`,
       {
         method: 'POST',
       },

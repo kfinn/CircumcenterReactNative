@@ -25,7 +25,7 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
 
   public onPress = () => {
     fetch(
-      `http://localhost:3000/api/events/${this.event.id}/venue_suggestions`,
+      `https://circumcenter.herokuapp.com/api/events/${this.event.id}/venue_suggestions`,
       {
         body: JSON.stringify({
           venue_suggestion: {

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Brunch Bot",
-    "slug": "BrunchBotReactNative",
+    "name": "Circumcenter",
+    "slug": "CIrcumcenterReactNative",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [

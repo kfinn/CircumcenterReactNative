@@ -11,7 +11,7 @@ const HOME_SCREEN_ROUTE = 'home';
 export default class HomeScreen extends React.Component<NavigationScreenConfigProps, {}> {
   public onPress = () => {
     fetch(
-      'http://localhost:3000/api/events',
+      'https://circumcenter.herokuapp.com/api/events',
       {
         body: JSON.stringify({
           event: {

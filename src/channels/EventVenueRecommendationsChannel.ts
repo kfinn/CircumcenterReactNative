@@ -12,7 +12,7 @@ export default (event: Event) => {
       connected: () => undefined,
       disconnected: () => undefined,
       received: () => {
-        fetch(`http://localhost:3000/api/events/${event.id}`)
+        fetch(`https://circumcenter.herokuapp.com/api/events/${event.id}`)
           .then(response => response.json())
           .then(camelize)
           .then((responseJson) => {
