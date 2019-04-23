@@ -26,7 +26,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.heptarex.Circumcenter",
       "associatedDomains": [
-        "https://circumcenter.herokuapp.com"
+        "applinks:circumcenter.herokuapp.com"
       ]
     },
     "description": "",
