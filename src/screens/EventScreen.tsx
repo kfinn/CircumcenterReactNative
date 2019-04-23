@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import Event from '../models/Event';
 import Styles from '../Styles';
 import VenueSuggestionRow from '../components/VenueSuggestionRow';
+import NewVenueForm from '../components/NewVenueForm';
 
 const EVENT_SCREEN_ROUTE = 'event';
 
@@ -23,23 +24,6 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
     this.event.unsubscribe();
   }
 
-  public onPress = () => {
-    fetch(
-      `https://circumcenter.herokuapp.com/api/events/${this.event.id}/venue_suggestions`,
-      {
-        body: JSON.stringify({
-          venue_suggestion: {
-            name: 'blah blah blah'
-          },
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      },
-    );
-  }
-
   public render() {
     return (
       <View style={Styles.container}>
@@ -51,7 +35,7 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
             return <VenueSuggestionRow key={venueSuggestion.id} venueSuggestion={venueSuggestion} />;
           })
         }
-        <Button title="Recommend a Venue" onPress={this.onPress} />
+        <NewVenueForm event={this.event} />
       </View>
     );
   }
