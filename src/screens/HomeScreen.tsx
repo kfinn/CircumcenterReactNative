@@ -1,7 +1,7 @@
-import camelize from 'camelize';
 import * as React from 'react';
 import { Button, View } from 'react-native';
 import { NavigationScreenConfigProps } from 'react-navigation';
+import CircumcenterResponse from '../models/CircumcenterResponse';
 import Event from '../models/Event';
 import Styles from '../Styles';
 import { EVENT_SCREEN_ROUTE } from './EventScreen';
@@ -9,8 +9,8 @@ import { EVENT_SCREEN_ROUTE } from './EventScreen';
 const HOME_SCREEN_ROUTE = 'home';
 
 export default class HomeScreen extends React.Component<NavigationScreenConfigProps, {}> {
-  public onPress = () => {
-    fetch(
+  public onPress = async () => {
+    const response = await CircumcenterResponse(fetch(
       'https://circumcenter.herokuapp.com/api/events',
       {
         body: JSON.stringify({
@@ -23,13 +23,8 @@ export default class HomeScreen extends React.Component<NavigationScreenConfigPr
         },
         method: 'POST',
       },
-    )
-      .then(response => response.json())
-      .then(camelize)
-      .then(json => new Event(json))
-      .then((event) => {
-        this.props.navigation.push(EVENT_SCREEN_ROUTE, { event });
-      });
+    ));
+    this.props.navigation.push(EVENT_SCREEN_ROUTE, { event: new Event(response) });
   }
 
   public render() {

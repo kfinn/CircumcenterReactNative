@@ -12,7 +12,7 @@ export default class VenueSuggestion {
   public id: string;
   public name: string;
   public endorsements: number;
-  public event: Event
+  public event: Event;
 
   constructor(params: IVenueSuggestionParams) {
     this.id = params.id;

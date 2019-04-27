@@ -20,7 +20,7 @@ export default class Event {
     this.id = params.id;
     this.start = moment(params.start);
     this.venueSuggestions = params.venueSuggestions.map((venueSuggestionParams) => {
-      return new VenueSuggestion({ event: this, ...venueSuggestionParams })
+      return new VenueSuggestion({ event: this, ...venueSuggestionParams });
     });
   }
 
@@ -38,7 +38,7 @@ export default class Event {
 
     const currentVenueSuggestionIds = updatedData.venueSuggestions.map(v => v.id);
     this.venueSuggestions = this.venueSuggestions.filter(
-      v => currentVenueSuggestionIds.some(currentId => v.id === currentId)
+      v => currentVenueSuggestionIds.some(currentId => v.id === currentId),
     );
   }
 

@@ -1,4 +1,4 @@
-import camelize from 'camelize';
+import CircumcenterResponse from '../models/CircumcenterResponse';
 import Event from '../models/Event';
 import ActionCableConsumer from './ActionCableConsumer';
 
@@ -11,13 +11,12 @@ export default (event: Event) => {
     {
       connected: () => undefined,
       disconnected: () => undefined,
-      received: () => {
-        fetch(`https://circumcenter.herokuapp.com/api/events/${event.id}`)
-          .then(response => response.json())
-          .then(camelize)
-          .then((responseJson) => {
-            event.merge(responseJson);
-          });
+      received: async () => {
+        const response = await CircumcenterResponse(
+          fetch(`https://circumcenter.herokuapp.com/api/events/${event.id}`),
+        );
+        event.merge(response);
+        return event;
       },
     },
   );

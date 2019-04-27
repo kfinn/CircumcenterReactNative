@@ -2,10 +2,10 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import NewVenueForm from '../components/NewVenueForm';
+import VenueSuggestionRow from '../components/VenueSuggestionRow';
 import Event from '../models/Event';
 import Styles from '../Styles';
-import VenueSuggestionRow from '../components/VenueSuggestionRow';
-import NewVenueForm from '../components/NewVenueForm';
 
 const EVENT_SCREEN_ROUTE = 'event';
 
@@ -32,7 +32,10 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
         <Text>{this.event.start.fromNow()}</Text>
         {
           this.event.venueSuggestions.map((venueSuggestion) => {
-            return <VenueSuggestionRow key={venueSuggestion.id} venueSuggestion={venueSuggestion} />;
+            return <VenueSuggestionRow
+              key={venueSuggestion.id}
+              venueSuggestion={venueSuggestion}
+            />;
           })
         }
         <NewVenueForm event={this.event} />

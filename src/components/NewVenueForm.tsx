@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Button, TextInput } from "react-native";
+import { Button, TextInput } from 'react-native';
 import Event from '../models/Event';
 
-export interface INewVenueFormParams { event: Event };
-interface INewVenueFormState { name: string };
+export interface INewVenueFormParams { event: Event; }
+interface INewVenueFormState { name: string; }
 
 export default class NewVenueForm extends React.Component<INewVenueFormParams, INewVenueFormState> {
   get event() {
@@ -15,15 +15,15 @@ export default class NewVenueForm extends React.Component<INewVenueFormParams, I
   }
 
   set name(name) {
-    this.setState({ name: name });
+    this.setState({ name });
   }
 
   public onChangeText = (text: string) => {
-    this.name = text
+    this.name = text;
   }
 
-  public onPress = () => {
-    fetch(
+  public onPress = async () => {
+    await fetch(
       `https://circumcenter.herokuapp.com/api/events/${this.event.id}/venue_suggestions`,
       {
         body: JSON.stringify({
@@ -36,7 +36,8 @@ export default class NewVenueForm extends React.Component<INewVenueFormParams, I
         },
         method: 'POST',
       },
-    ).then(() => { this.name = '' });
+    );
+    this.name = '';
   }
 
   public render() {
@@ -45,6 +46,6 @@ export default class NewVenueForm extends React.Component<INewVenueFormParams, I
         <TextInput placeholder="Venue Name" value={this.name} onChangeText={this.onChangeText} />
         <Button title="Recommend" onPress={this.onPress} />
       </React.Fragment>
-    )
+    );
   }
 }
