@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import NewVenueForm from '../components/NewVenueForm';
 import VenueSuggestionRow from '../components/VenueSuggestionRow';
 import Event from '../models/Event';
 import Styles from '../Styles';
+import { NEW_VENUE_SCREEN_ROUTE } from './NewVenueScreen';
 
 const EVENT_SCREEN_ROUTE = 'event';
 
@@ -24,6 +24,10 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
     this.event.unsubscribe();
   }
 
+  public onPressNewVenue = () => {
+    this.props.navigation.navigate(NEW_VENUE_SCREEN_ROUTE, { event: this.event });
+  }
+
   public render() {
     return (
       <View style={Styles.container}>
@@ -38,7 +42,7 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
             />;
           })
         }
-        <NewVenueForm event={this.event} />
+        <Button title="New Venue" onPress={this.onPressNewVenue} />
       </View>
     );
   }

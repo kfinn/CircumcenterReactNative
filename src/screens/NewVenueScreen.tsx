@@ -1,13 +1,17 @@
 import * as React from 'react';
-import { Button, TextInput } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
+import { Button, TextInput, View } from 'react-native';
+import Styles from '../Styles';
 import Event from '../models/Event';
 
-export interface INewVenueFormParams { event: Event; }
-interface INewVenueFormState { name: string; }
+const NEW_VENUE_SCREEN_ROUTE = 'new_venue';
 
-export default class NewVenueForm extends React.Component<INewVenueFormParams, INewVenueFormState> {
+export interface INewVenueScreenNavigationParams { event: Event; }
+interface INewVenueScreenState { name: string; }
+
+export default class NewVenueScreen extends React.Component<NavigationScreenProps<INewVenueScreenNavigationParams>, INewVenueScreenState> {
   get event() {
-    return this.props.event;
+    return this.props.navigation.getParam('event');
   }
 
   get name() {
@@ -37,15 +41,19 @@ export default class NewVenueForm extends React.Component<INewVenueFormParams, I
         method: 'POST',
       },
     );
-    this.name = '';
+    if (this.props.navigation.isFocused()) {
+      this.props.navigation.goBack();
+    }
   }
 
   public render() {
     return (
-      <React.Fragment>
+      <View style={Styles.container}>
         <TextInput placeholder="Venue Name" value={this.name} onChangeText={this.onChangeText} />
         <Button title="Recommend" onPress={this.onPress} />
-      </React.Fragment>
+      </View>
     );
   }
 }
+
+export { NEW_VENUE_SCREEN_ROUTE };

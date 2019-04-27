@@ -24,7 +24,7 @@ export default class HomeScreen extends React.Component<NavigationScreenConfigPr
         method: 'POST',
       },
     ));
-    this.props.navigation.push(EVENT_SCREEN_ROUTE, { event: new Event(response) });
+    this.props.navigation.navigate(EVENT_SCREEN_ROUTE, { event: new Event(response) });
   }
 
   public render() {
