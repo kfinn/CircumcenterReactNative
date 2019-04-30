@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button, Text } from 'react-native';
 import VenueSuggestion from '../models/VenueSuggestion';
+import { CIRCUMCENTER_API_URL } from '../env';
 
 export interface IVenueProps { venueSuggestion: VenueSuggestion; }
 
@@ -11,7 +12,7 @@ export default class VenueSuggestionRow extends React.Component<IVenueProps, {}>
 
   public endorsePressed = () => {
     fetch(
-      'https://circumcenter.herokuapp.com/api/venue_suggestions/' +
+      `${CIRCUMCENTER_API_URL}/venue_suggestions/` +
       `${this.venueSugestion.id}/endorsements`,
       {
         method: 'POST',
@@ -21,7 +22,7 @@ export default class VenueSuggestionRow extends React.Component<IVenueProps, {}>
 
   public vetoPressed = () => {
     fetch(
-      `https://circumcenter.herokuapp.com/api/venue_suggestions/${this.venueSugestion.id}/vetoes`,
+      `${CIRCUMCENTER_API_URL}/venue_suggestions/${this.venueSugestion.id}/vetoes`,
       {
         method: 'POST',
       },

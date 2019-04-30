@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Circumcenter",
-    "slug": "CIrcumcenterReactNative",
+    "slug": "CircumcenterReactNative",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [

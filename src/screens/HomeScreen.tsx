@@ -5,13 +5,14 @@ import CircumcenterResponse from '../models/CircumcenterResponse';
 import Event from '../models/Event';
 import Styles from '../Styles';
 import { EVENT_SCREEN_ROUTE } from './EventScreen';
+import { CIRCUMCENTER_API_URL } from '../env';
 
 const HOME_SCREEN_ROUTE = 'home';
 
 export default class HomeScreen extends React.Component<NavigationScreenConfigProps, {}> {
   public onPress = async () => {
     const response = await CircumcenterResponse(fetch(
-      'https://circumcenter.herokuapp.com/api/events',
+      `${CIRCUMCENTER_API_URL}/events`,
       {
         body: JSON.stringify({
           event: {
