@@ -7,6 +7,12 @@ const STYLES = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  row: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
 });
 
 export default STYLES;

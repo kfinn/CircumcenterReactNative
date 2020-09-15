@@ -6,6 +6,7 @@ import VenueSuggestionRow from '../components/VenueSuggestionRow';
 import Event from '../models/Event';
 import Styles from '../Styles';
 import { NEW_VENUE_SCREEN_ROUTE } from './NewVenueScreen';
+import CurrentParticipantForm from '../components/CurrentParticipantForm';
 
 const EVENT_SCREEN_ROUTE = 'event';
 
@@ -31,6 +32,7 @@ class EventScreen extends React.Component<NavigationScreenProps<IEventScreenNavi
   public render() {
     return (
       <View style={Styles.container}>
+        <CurrentParticipantForm event={this.event} />
         <Text>{this.event.id}</Text>
         <Text>{this.event.start.format()}</Text>
         <Text>{this.event.start.fromNow()}</Text>
